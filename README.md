@@ -3,4 +3,4 @@
 ###  ECMAScript 6 (ES6+). Regular Expressions. RegExp Object. RegExp Basic
 ***
 
-### Validate Register Form
+### Registration Form validation
