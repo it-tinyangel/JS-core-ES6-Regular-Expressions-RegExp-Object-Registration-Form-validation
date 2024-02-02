@@ -6,11 +6,20 @@
 	--black: #000;
 	--blue: #6495ed;
 	--dark-blue: #4169e1;
-	--green: #9acd32;
-	--red: #dc143c;
+	--green: #228b22;
+	--red: #ff6347;
 
-	--valid: var(--green);
-	--invalid:var(--red);
+	--valid-color: var(--green, forestgreen);
+	--invalid-color: var(--red, tomato);
+
+	--border-color: var(--gray, gray);
+
+	--checkbox-border-color: var(--border-color);
+	--checkbox-checked-color: var(--btn-color);
+	--checkbox-checked-hover-color: var(--dark-blue, royalblue);
+
+	--btn-color: var(--blue, cornflowerblue);
+	--btn-color-hover: var(--dark-blue, royalblue);
 
 	/* SIZES */
 	--size-l: 1rem;
@@ -18,19 +27,17 @@
 	--size-s: .5rem;
 	--size-xs: .25rem;
 
-	--extra-large-spacing: var(--size-l);
-	--large-spacing: var(--size-m);
+	--extra-large-spacing: calc(var(--large-spacing) * 1.25);
+	--large-spacing: var(--size-l);
+	--medium-spacing: var(--size-m);
 	--base-spacing: var(--size-s);
 	--small-spacing: var(--size-xs);
-	--extra-small-spacing: calc(var(--size-xs) / 2);
 
 	--border-width: 1px;
 	--border-radius: var(--small-spacing);
 
-	--min-width: 450px;
-	--max-width: 600px;
-	--min-height: 350px;
-	--max-height: 670px;
+	--form-width: 30rem;
+	--input-field-height: 3rem;
 
 	/* FONTS */
 	--font-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -49,7 +56,7 @@
 	--medium-form-font-size: var(--body-font-size);
 	--medium-form-font-weight: var(--body-font-weight);
 
-	--small-form-font-size: var(--body-font-size);
+	--small-form-font-size: .9em;
 	--small-form-font-weight: var(--main-font-weight);
 
 	--btn-form-font-size: var(--body-font-size);
@@ -94,14 +101,13 @@ section {
 
 /* Form */
 form.form {
-	min-width: var(--min-width);
-	width: 100%;
+	min-width: var(--form-width);
 }
 
 fieldset.form-group {
-	margin-bottom: calc(var(--extra-large-spacing) * 1.25);
+	margin-bottom: var(--extra-large-spacing);
 	display: grid;
-	grid-row-gap: calc(var(--extra-large-spacing) * 1.25);
+	grid-row-gap: var(--extra-large-spacing);
 	border: 0;
 }
 
@@ -111,10 +117,115 @@ fieldset.form-group :not(div.checkbox-wrap, input.form-input, label) {
 
 /* Form title */
 h2.form-title {
-	margin-bottom: calc(var(--extra-large-spacing) * 1.75);
+	margin-bottom: calc(var(--extra-large-spacing) + var(--small-spacing));
 	font-size: var(--title-font-size);
 	font-weight: var(--title-font-weight);
 	letter-spacing: -.02em;
+}
+
+/* Input fields */
+div.input-wrap {
+	width: auto;
+	height: var(--input-field-height);
+	position: relative;
+}
+
+div.input-wrap>input.form-input {
+	width: 100%;
+	height: 100%;
+	padding: var(--medium-spacing);
+	display: block;
+	border: 0;
+	outline: 0;
+	border-radius: var(--border-radius);
+	border: var(--border-width) solid var(--border-color);
+	font-size: var(--medium-form-font-size);
+	font-weight: var(--medium-form-font-weight);
+	color: color-mix(in srgb, var(--black, black), transparent 20%);
+}
+
+div.input-wrap>label {
+	height: 100%;
+	display: block;
+	position: absolute;
+	top: 0;
+	z-index: 1;
+	padding: var(--medium-spacing);
+	background: transparent;
+	transition: all .2s ease;
+}
+
+div.input-wrap>input.form-input::placeholder,
+div.input-wrap>input.form-input:placeholder-shown {
+	color: transparent;
+}
+
+div.input-wrap>input.form-input:is(:focus, :valid),
+div.input-wrap>input.form-input:not(:placeholder-shown) {
+	padding: var(--extra-large-spacing) var(--medium-spacing) var(--small-spacing) var(--medium-spacing);
+}
+
+div.input-wrap>input.form-input:hover {
+	box-shadow: 0 0 3px var(--gray, gray);
+}
+
+div.input-wrap>input.form-input:focus {
+	box-shadow: 0 0 3px var(--gray, gray), 0 0 5px var(--btn-color);
+}
+
+div.input-wrap>input.form-input:-webkit-autofill {
+	padding: var(--extra-large-spacing) var(--medium-spacing) var(--small-spacing) var(--medium-spacing);
+}
+
+div.input-wrap>input.form-input:auto-fill {
+	padding: var(--extra-large-spacing) var(--medium-spacing) var(--small-spacing) var(--medium-spacing);
+}
+
+div.input-wrap>input.form-input:auto-fill~label {
+	color: color-mix(in srgb, var(--black, black), transparent 30%);
+	transform: translateY(-1rem);
+}
+
+div.input-wrap>input.form-input:focus~label,
+div.input-wrap>input.form-input:valid~label,
+div.input-wrap>input.form-input:not(:placeholder-shown)~label {
+	padding: var(--extra-large-spacing) var(--medium-spacing) var(--small-spacing) var(--medium-spacing);
+	font-size: var(--small-form-font-size);
+	font-weight: var(--small-form-font-weight);
+	color: color-mix(in srgb, var(--black, black), transparent 30%);
+	transform: translateY(-1rem);
+}
+
+/* Input defaults and validation */
+div.input-wrap>input.form-input:user-valid {
+	border: var(--border-width) solid var(--valid-color);
+	box-shadow: 0 0 3px var(--gray, gray), 0 0 5px var(--valid-color);
+}
+
+div.input-wrap>input.form-input:user-invalid {
+	border: var(--border-width) solid var(--invalid-color);
+	box-shadow: 0 0 3px var(--gray, gray), 0 0 5px var(--invalid-color);
+}
+
+/* Icons valid and invalid */
+div.input-wrap>input.form-input:user-valid+span.field-icon::after {
+	display: block;
+	position: absolute;
+	inset: var(--medium-spacing);
+	z-index: 1;
+	content: '✔';
+	text-align: end;
+	color: var(--valid-color);
+}
+
+div.input-wrap>input.form-input:user-invalid+span.field-icon::after {
+	display: block;
+	position: absolute;
+	inset: var(--medium-spacing);
+	z-index: 1;
+	content: '✖';
+	text-align: end;
+	color: var(--invalid-color);
 }
 
 /* Checkbox field */
@@ -122,122 +233,86 @@ div.checkbox-wrap {
 	display: grid;
 	grid-template-columns: auto auto;
 	justify-content: start;
-	gap: var(--large-spacing);
+	gap: var(--medium-spacing);
 }
 
-div.input-wrap {
-	width: auto;
-	height: 3rem;
-	position: relative;
-}
-
-/* Input fields */
-div.input-wrap>input.form-input {
-	width: 100%;
-	height: 100%;
-	padding: 1rem;
-	display: block;
+div.checkbox-wrap>input.form-checkbox[type='checkbox'] {
+	width: 21px;
+	height: 21px;
+	width: 19px;
+	height: 19px;
 	border: 0;
 	outline: 0;
+	appearance: none;
+	user-select: none;
 	border-radius: var(--border-radius);
-	border: var(--border-width) solid var(--gray, gray);
-	box-shadow: 0 0 2px var(--gray, gray);
-}
-
-div.input-wrap>label {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 1;
-	padding: .75rem 1rem;
-	overflow: hidden;
-	text-align: start;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	pointer-events: none;
-	transform-origin: 0 0;
+	border: var(--border-width) solid var(--checkbox-border-color);
+	color: var(--white, white);
+	color: crimson;
+	background-color: var(--white, white);
 	transition: all .2s ease;
+	cursor: pointer;
 }
 
-div.input-wrap>input.form-input::-moz-placeholder {
-	color: transparent;
+div.checkbox-wrap>input.form-checkbox[type='checkbox']:hover {
+	box-shadow: 0 0 3px var(--gray, gray);
 }
 
-div.input-wrap>input.form-input:placeholder {
-	color: transparent;
-	transition: all .3s ease;
+div.checkbox-wrap>input.form-checkbox[type='checkbox']:checked:hover {
+	box-shadow: 0 0 3px var(--gray, gray), 0 0 5px var(--checkbox-checked-color);
 }
 
-div.input-wrap>input.form-input:not(:-moz-placeholder-shown) {
-	padding: 1.25rem .75rem .25rem .75rem;
+div.checkbox-wrap>input.form-checkbox[type='checkbox']:focus {
+	border-color: var(--checkbox-border-color);
+	background-color: var(--white, white);
 }
 
-div.input-wrap>input.form-input:focus,
-div.input-wrap>input.form-input:valid,
-div.input-wrap>input.form-input:not(:placeholder-shown) {
-	padding: 1.25rem .75rem .25rem .75rem;
-	font-size: var(--medium-form-font-size);
-	font-weight: var(--medium-form-font-weight);
-	color: color-mix(in srgb, var(--black, black), transparent 25%);
+div.checkbox-wrap>input.form-checkbox[type='checkbox']:checked {
+	position: relative;
+	border-color: var(--checkbox-checked-hover-color);
+	box-shadow: 0 0 3px var(--gray, gray);
+	background-color: transparent;
 }
 
-div.input-wrap>input.form-input:focus,
-div.input-wrap>input.form-input:valid {
-	padding: 1.25rem .75rem .25rem .75rem;
-	color: color-mix(in srgb, var(--black, black), transparent 25%);
+div.checkbox-wrap>input.form-checkbox[type='checkbox']:checked:before {
+	content: '✔';
+	width: 15px;
+	height: 15px;
+	display: block;
+	position: absolute;
+	top: 1px;
+	left: 1px;
+	line-height: 1.2;
+	border-radius: var(--border-radius);
+	color: var(--white, white);
+	background-color: var(--checkbox-checked-color);
 }
 
-div.input-wrap>input.form-input:-webkit-autofill {
-	padding: 1.25rem .75rem .25rem .75rem;
-}
-
-div.input-wrap>input.form-input:not(:-moz-placeholder-shown)~label {
-	font-size: var(--small-form-font-size);
-	font-weight: var(--small-form-font-weight);
-	color: color-mix(in srgb, var(--black, black), transparent 40%);
-	transform: scale(.75) translateY(-0.25rem);
-}
-
-div.input-wrap>input.form-input:focus~label,
-div.input-wrap>input.form-input:valid~label,
-div.input-wrap>input.form-input:not(:placeholder-shown)~label {
-	font-size: var(--small-form-font-size);
-	font-weight: var(--small-form-font-weight);
-	color: color-mix(in srgb, var(--black, black), transparent 40%);
-	transform: scale(.75) translateY(-0.25rem);
-}
-
-/* Input defaults and validation */
-input.form-input:not([type="submit"]):user-valid {
-	border: var(--border-width) solid var(--valid);
-}
-
-input.form-input:not([type="submit"]):user-invalid {
-	border: var(--border-width) solid var(--invalid);
+div.checkbox-wrap>label.confirm-label>span.confirm-control {
+	vertical-align: top;
+	line-height: 1.1;
 }
 
 /* Sign Up Button */
 button.form-submit {
 	width: 100%;
-	padding: 0.8rem 1rem;
-	border: none;
+	padding: var(--medium-spacing) var(--large-spacing);
+	border: 0;
+	outline: 0;
 	border-radius: var(--border-radius);
-	border: var(--border-width) solid transparent;
-	box-shadow: 0 0 5px transparent;
+	border: var(--border-width) solid var(--btn-color);
 	font-size: var(--btn-form-font-size);
 	font-weight: var(--btn-form-font-weight);
 	color: var(--white, white);
-	background: var(--blue, cornflowerblue);
+	background: var(--btn-color);
 	transition: all .3s ease;
 	cursor: pointer;
 }
 
 button.form-submit:is(:hover, :active, :focus) {
 	background: var(--dark-blue, royalblue);
-	border: var(--border-width) solid var(--dark-blue, royalblue);
-	box-shadow: 0 0 7px var(--dark-blue, royalblue);
+	border: var(--border-width) solid var(--btn-color-hover);
+	box-shadow: 0 0 3px var(--gray, gray), 0 0 5px var(--btn-color);
 }
 
 button.form-submit:focus {
