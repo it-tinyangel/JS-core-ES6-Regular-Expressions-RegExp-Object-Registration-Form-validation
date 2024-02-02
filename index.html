@@ -23,6 +23,7 @@
 					<div class="input-wrap">
 						<input type="text" id="firstName" name="firstName" class="form-input" placeholder="" value=""
 							aria-labelledby="firstNameLabel" autocomplete="given-name" required>
+						<span class="field-icon"></span>
 						<label for="firstName" id="firstNameLabel" aria-label="Enter Your First Name">
 							<span>First Name</span>
 						</label>
@@ -31,6 +32,7 @@
 					<div class="input-wrap">
 						<input type="text" id="lastName" name="lastName" class="form-input" placeholder="" value=""
 							aria-labelledby="lastNameLabel" autocomplete="family-name" required>
+						<span class="field-icon"></span>
 						<label for="lastName" id="lastNameLabel" aria-label="Enter Your Last Name">
 							<span>Last Name</span>
 						</label>
@@ -39,6 +41,7 @@
 					<div class="input-wrap">
 						<input type="email" id="email" name="email" class="form-input" placeholder="" value=""
 							aria-labelledby="emailLabel" autocomplete="email" required>
+						<span class="field-icon"></span>
 						<label for="email" id="emailLabel" aria-label="Enter Your email address">
 							<span>Email address</span>
 						</label>
@@ -46,26 +49,26 @@
 
 					<div class="input-wrap">
 						<input type="password" id="password" name="password" class="form-input" placeholder="" value=""
-							aria-labelledby="passwordLabel" minlength="6" maxlength="12" required>
+							aria-labelledby="passwordLabel" autocomplete="new-password" minlength="6" maxlength="12" required>
+						<span class="field-icon"></span>
 						<label for="password" id="passwordLabel" aria-label="Enter Your password">
 							<span>Password</span>
 						</label>
 					</div>
 
 					<div class="checkbox-wrap">
-						<input type="checkbox" id="confirm" name="confirm" value="confirm" aria-labelledby="confirmLabel" required>
+						<input type="checkbox" id="confirm" name="confirm" class="form-checkbox" value="confirm"
+							aria-labelledby="confirmLabel" required>
 						<label for="confirm" id="confirmLabel" class="confirm-label">
 							<span class="confirm-control" aria-hidden="true">I agree with Privacy Policy</span>
 						</label>
 					</div>
 				</fieldset>
 
-				<div class="button-wrap">
-					<button type="submit" id="signUpButton" class="form-submit" name="signUp" value="Sign Up"
-						aria-label="Go to the created profile" aria-labelledby="signUpButtonLabel" accesskey="s">
-						<span id="signUpButtonLabel">Sign Up</span>
-					</button>
-				</div>
+				<button type="submit" id="signUpButton" name="signUp" class="form-submit" value="Sign Up"
+					aria-label="Go to the created profile" aria-labelledby="signUpButtonLabel" accesskey="s">
+					<span id="signUpButtonLabel">Sign Up</span>
+				</button>
 
 			</form>
 		</section>
