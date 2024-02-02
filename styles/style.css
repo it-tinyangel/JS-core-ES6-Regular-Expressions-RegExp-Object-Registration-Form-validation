@@ -218,7 +218,25 @@ div.input-wrap>input.form-input:user-valid+span.field-icon::after {
 	color: var(--valid-color);
 }
 
-div.input-wrap>input.form-input:user-invalid+span.field-icon::after {
+div.input-wrap>input.form-input:user-valid+span.password-toggle-icon::after {
+	display: block;
+	position: absolute;
+	inset: var(--medium-spacing);
+	z-index: 1;
+	content: '👁';
+	text-align: end;
+}
+
+div.input-wrap>input.form-input:user-valid+span.password-toggle-icon-show::after {
+	color: var(--valid-color);
+}
+
+div.input-wrap>input.form-input:user-valid+span.password-toggle-icon-hide::after {
+	color: var(--gray, gray);
+}
+
+div.input-wrap>input.form-input:user-invalid+span.field-icon::after,
+div.input-wrap>input.form-input:user-invalid+span.password-toggle-icon::after {
 	display: block;
 	position: absolute;
 	inset: var(--medium-spacing);
@@ -317,4 +335,9 @@ button.form-submit:is(:hover, :active, :focus) {
 
 button.form-submit:focus {
 	outline: none;
+}
+
+::selection {
+	color: var(--white, white);
+	background: var(--dark-blue, royalblue);
 }
