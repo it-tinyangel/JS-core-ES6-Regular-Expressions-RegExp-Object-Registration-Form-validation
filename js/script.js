@@ -1,20 +1,22 @@
-const passwordField = document.getElementById('password');
+const inputPassword = document.getElementById('password');
 const iconTogglePassword = document.querySelector('.password-toggle-icon');
 
 iconTogglePassword.addEventListener('click', togglePassword);
 
-function showPssword() {
-	passwordField.setAttribute('type', 'text');
-	iconTogglePassword.classList.remove('password-toggle-icon-hide');
-	iconTogglePassword.classList.add('password-toggle-icon-show');
+function showPassword() {
+	inputPassword.setAttribute('type', 'text');
+	iconTogglePassword.innerHTML = `
+	<i class="fa-solid fa-eye" id="eye"></i>
+	`;
 }
 
-function hidePssword() {
-	passwordField.setAttribute('type', 'password');
-	iconTogglePassword.classList.remove('password-toggle-icon-show');
-	iconTogglePassword.classList.add('password-toggle-icon-hide');
+function hidePassword() {
+	inputPassword.setAttribute('type', 'password');
+	iconTogglePassword.innerHTML = `
+	<i class="fa-solid fa-eye-slash"></i>
+	`;
 }
 
 function togglePassword() {
-	passwordField.type === 'password' ? showPssword() : hidePssword()
+	inputPassword.getAttribute("type") === 'password' ? showPassword() : hidePassword();
 }
