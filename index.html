@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="styles/style.css">
-	<title>Registration Form</title>
-</head>
-
-<body>
-
 	<main>
 		<section>
 			<!-- Sign Up -->
@@ -50,11 +38,13 @@
 					<div class="input-wrap">
 						<input type="password" id="password" name="password" class="form-input" placeholder="" value=""
 							aria-labelledby="passwordLabel" autocomplete="new-password" minlength="6" maxlength="12" required>
-						<span class="password-toggle-icon"></span>
+						<!-- Show/hide password -->
+						<span class="password-toggle-icon">
+							<i class="fa-solid fa-eye-slash"></i>
+						</span>
 						<label for="password" id="passwordLabel" aria-label="Enter Your password">
 							<span>Password</span>
 						</label>
-
 					</div>
 
 					<div class="checkbox-wrap">
@@ -74,8 +64,3 @@
 			</form>
 		</section>
 	</main>
-
-	<script src="js/script.js"></script>
-</body>
-
-</html>
