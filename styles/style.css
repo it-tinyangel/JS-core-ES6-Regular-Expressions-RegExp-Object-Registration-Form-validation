@@ -208,7 +208,6 @@ div.input-wrap>input.form-input:user-invalid {
 /* Icons valid and invalid */
 div.input-wrap>input.form-input:user-valid+span.field-icon::after {
 	width: fit-content;
-	display: block;
 	position: absolute;
 	inset: var(--medium-spacing) 0 0 calc(var(--form-width) - var(--extra-large-spacing));
 	z-index: 1;
@@ -217,27 +216,7 @@ div.input-wrap>input.form-input:user-valid+span.field-icon::after {
 	color: var(--valid-color);
 }
 
-div.input-wrap>input.form-input:user-valid+span.password-toggle-icon::after {
-	width: fit-content;
-	display: block;
-	position: absolute;
-	inset: var(--medium-spacing) 0 0 calc(var(--form-width) - var(--extra-large-spacing));
-	z-index: 1;
-	content: '👁';
-	text-align: end;
-	/* color: var(--valid-color); */
-}
-
-div.input-wrap>input.form-input:user-valid+span.password-toggle-icon-show::after {
-	color: var(--valid-color);
-}
-
-div.input-wrap>input.form-input:user-valid+span.password-toggle-icon-hide::after {
-	color: var(--gray, gray);
-}
-
-div.input-wrap>input.form-input:user-invalid+span.field-icon::after,
-div.input-wrap>input.form-input:user-invalid+span.password-toggle-icon::after {
+div.input-wrap>input.form-input:user-invalid+span.field-icon::after {
 	width: fit-content;
 	display: block;
 	position: absolute;
@@ -245,6 +224,42 @@ div.input-wrap>input.form-input:user-invalid+span.password-toggle-icon::after {
 	z-index: 1;
 	content: '✖';
 	text-align: end;
+	color: var(--invalid-color);
+}
+
+/* Hide the password reveal control in MS Edge and IE  */
+div.input-wrap>input.form-input[type="password"] {
+	-webkit-text-security: square;
+}
+
+div.input-wrap>input.form-input[type="password"] {
+	-webkit-text-security: none;
+}
+
+div.input-wrap>input.form-input[type="password"] {
+	input-security: none;
+}
+
+div.input-wrap>input.form-input[type="password"]::-ms-reveal,
+div.input-wrap>input.form-input[type="password"]::-ms-clear {
+	display: none;
+}
+
+/* Icon password reveal control */
+div.input-wrap>input.form-input+span.password-toggle-icon>i.fa-eye,
+div.input-wrap>input.form-input+span.password-toggle-icon>i.fa-eye-slash {
+	width: fit-content;
+	position: absolute;
+	inset: var(--large-spacing) 0 0 calc(var(--form-width) - calc(var(--extra-large-spacing) * 1.1));
+	z-index: 1;
+	cursor: pointer;
+}
+
+div.input-wrap>input.form-input+span.password-toggle-icon>i.fa-eye-slash {
+	color: var(--gray, gray);
+}
+
+div.input-wrap>input.form-input:user-invalid+span.password-toggle-icon>i.fa-eye-slash {
 	color: var(--invalid-color);
 }
 
