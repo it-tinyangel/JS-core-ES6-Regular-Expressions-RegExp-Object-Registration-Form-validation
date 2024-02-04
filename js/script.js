@@ -1,30 +1,80 @@
-const form = document.querySelector('#signUpForm');
-const firstNameInput = document.querySelector('#firstName');
-const emailInput = document.querySelector('#email');
-const inputPassword = document.querySelector('#password');
-const iconTogglePassword = document.querySelector('.password-toggle-icon');
-const agreeCheckbox = document.querySelector('#agreeCheckbox');
-const signupButton = document.querySelector('#signUpButton');
+document.addEventListener('DOMContentLoaded', () => {
+	const form = document.forms.signUpForm;
 
-const successModal = document.querySelector('#successModal');
-const exploreButton = document.querySelector('#startButton');
+	const elements = {
+		firstName: form.firstName,
+		lastName: form.lastName,
+		email: form.email,
+		password: form.password,
+	};
+	const togglePassword = document.querySelector('.toggle-password');
+	const togglePasswordIcon = document.querySelector('.toggle-password').querySelector('i');
+	const termsCheckbox = document.querySelector('#terms');
+	const signUpButton = document.querySelector('#signUpButton');
 
-iconTogglePassword.addEventListener('click', togglePassword);
+	const successModal = document.querySelector('#successModal');
+	const exploreButton = document.querySelector('#exploreButton');
 
-function showPassword() {
-	inputPassword.setAttribute('type', 'text');
-	iconTogglePassword.innerHTML = `
-	<i class="fa-solid fa-eye" id="eye"></i>
-	`;
-}
+	const { firstName, lastName, email, password } = elements;
 
-function hidePassword() {
-	inputPassword.setAttribute('type', 'password');
-	iconTogglePassword.innerHTML = `
-	<i class="fa-solid fa-eye-slash"></i>
-	`;
-}
+	form.addEventListener('submit', showSuccessModal);
+	signUpButton.addEventListener('click', showSuccessModal);
+	exploreButton.addEventListener('click', closeSuccessModal);
+	termsCheckbox.addEventListener('change', handleCheckboxChange);
+	togglePassword.addEventListener('click', togglePasswordVisibility);
 
-function togglePassword() {
-	inputPassword.getAttribute("type") === 'password' ? showPassword() : hidePassword();
-}
+	function validateForm() {
+		return validateFirstName() && validateLastName() && validateEmail() && validatePassword() && termsCheckbox.checked;
+	}
+
+	function showSuccessModal(event) {
+		event.preventDefault();
+		if (validateForm()) {
+			successModal.style.display = 'block';
+		}
+	};
+
+	function closeSuccessModal() {
+		successModal.style.display = 'none';
+		form.reset();
+	};
+
+	function handleCheckboxChange() {
+		signUpButton.disabled = !validateForm() || !termsCheckbox.checked;
+	}
+
+	function validateFirstName() {
+		const nameRegex = /^[a-zA-Z]{1,20}$/;
+		return nameRegex.test(firstName.value);
+	}
+
+	function validateLastName() {
+		const nameRegex = /^[a-zA-Z]{1,20}$/;
+		return nameRegex.test(lastName.value);
+	}
+
+	function validateEmail() {
+		const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+		return emailRegex.test(email.value);
+	}
+
+	function validatePassword() {
+		const passwordRegex = /^[a-zA-Z0-9]{8,15}$/;
+		return passwordRegex.test(password.value);
+	}
+
+	function showPassword() {
+		password.setAttribute('type', 'text');
+		togglePasswordIcon.className = 'fa-solid fa-eye';
+
+	}
+
+	function hidePassword() {
+		password.setAttribute('type', 'password');
+		togglePasswordIcon.className = 'fa-solid fa-eye-slash';
+	}
+
+	function togglePasswordVisibility() {
+		password.getAttribute("type") === 'password' ? showPassword() : hidePassword();
+	}
+});
