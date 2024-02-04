@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-	const form = document.forms.signUpForm;
+	const form = document.forms.signUpForm,
+		elements = {
+			firstName: form.firstName,
+			lastName: form.lastName,
+			email: form.email,
+			password: form.password,
+		};
+	const alertInputMessage = document.querySelector('.validate-field__alert');
 
-	const elements = {
-		firstName: form.firstName,
-		lastName: form.lastName,
-		email: form.email,
-		password: form.password,
-	};
 	const togglePassword = document.querySelector('.toggle-password');
 	const togglePasswordIcon = document.querySelector('.toggle-password').querySelector('i');
 	const termsCheckbox = document.querySelector('#terms');
@@ -20,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	form.addEventListener('submit', showSuccessModal);
 	signUpButton.addEventListener('click', showSuccessModal);
 	exploreButton.addEventListener('click', closeSuccessModal);
-	termsCheckbox.addEventListener('change', handleCheckboxChange);
 	togglePassword.addEventListener('click', togglePasswordVisibility);
+	termsCheckbox.addEventListener('change', handleCheckboxChange);
 
 	function validateForm() {
 		return validateFirstName() && validateLastName() && validateEmail() && validatePassword();
@@ -40,33 +41,32 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	function handleCheckboxChange() {
-		signUpButton.disabled = !validateForm() && !termsCheckbox.checked;
+		signUpButton.disabled = !validateForm() || !termsCheckbox.checked;
 	}
 
 	function validateFirstName() {
-		const nameRegex = /^[a-zA-Z]{1,20}$/;
-		return nameRegex.test(firstName.value);
+		const nameReg = /^[a-zA-Z]{1,20}$/;
+		return nameReg.test(firstName.value);
 	}
 
 	function validateLastName() {
-		const nameRegex = /^[a-zA-Z]{1,20}$/;
-		return nameRegex.test(lastName.value);
+		const nameReg = /^[a-zA-Z]{1,20}$/;
+		return nameReg.test(lastName.value);
 	}
 
 	function validateEmail() {
-		const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-		return emailRegex.test(email.value);
+		const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return emailReg.test(email.value);
 	}
 
 	function validatePassword() {
-		const passwordRegex = /^[a-zA-Z0-9]{8,15}$/;
-		return passwordRegex.test(password.value);
+		const passwordReg = /^[a-zA-Z0-9]{8,15}$/;
+		return passwordReg.test(password.value);
 	}
 
 	function showPassword() {
 		password.setAttribute('type', 'text');
 		togglePasswordIcon.className = 'fa-solid fa-eye';
-
 	}
 
 	function hidePassword() {
