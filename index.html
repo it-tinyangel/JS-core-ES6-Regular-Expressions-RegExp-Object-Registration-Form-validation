@@ -16,7 +16,7 @@
 			<!-- Sign Up -->
 			<form name="signUpForm" id="signUpForm" class="form" aria-label="Sign Up in the Form" autocomplete="on">
 				<fieldset class="form-group">
-					<legend class="visually-hidden" aria-label="Please, Sign Up">
+					<legend aria-label="Please, Sign Up">
 						<h2 class="form-title">Please, Sign Up</h2>
 					</legend>
 
@@ -27,6 +27,11 @@
 						<label for="firstName" id="firstNameLabel" class="form-label" aria-label="Enter Your First Name">
 							<span>First Name</span>
 						</label>
+
+						<div class="validate-field__alert visually-hidden">
+							<div class="close-alert"></div>
+							<p>Incorrect entry in the field</p>
+						</div>
 					</div>
 
 					<div class="input-wrap">
@@ -36,6 +41,11 @@
 						<label for="lastName" id="lastNameLabel" class="form-label" aria-label="Enter Your Last Name">
 							<span>Last Name</span>
 						</label>
+
+						<div class="validate-field__alert visually-hidden">
+							<div class="close-alert"></div>
+							<p>Incorrect entry in the field</p>
+						</div>
 					</div>
 
 					<div class="input-wrap">
@@ -45,6 +55,11 @@
 						<label for="email" id="emailLabel" class="form-label" aria-label="Enter Your email address">
 							<span>Email address</span>
 						</label>
+
+						<div class="validate-field__alert visually-hidden">
+							<div class="close-alert"></div>
+							<p>Incorrect entry in the field</p>
+						</div>
 					</div>
 
 					<div class="input-wrap">
@@ -57,6 +72,11 @@
 						<label for="password" id="passwordLabel" class="form-label" aria-label="Enter Your password">
 							<span>Password</span>
 						</label>
+
+						<div class="validate-field__alert visually-hidden">
+							<div class="close-alert"></div>
+							<p>Incorrect entry in the field</p>
+						</div>
 					</div>
 
 					<div class="checkbox-wrap">
@@ -74,8 +94,6 @@
 				</button>
 			</form>
 
-			<div id="overlay"></div>
-
 			<!-- Successful Modal -->
 			<div class="success-modal visually-hidden" id="successModal">
 				<div class="success-modal__header">
@@ -87,6 +105,7 @@
 				<div class="success-modal__main" aria-label="User Profile">
 					<h3 class="success-modal__title">Great!</h3>
 					<p class="success-modal__content">Your account has been created successfully.</p>
+
 					<button type="button" id="exploreButton" name="button" class="modal-button" value="Start exploring"
 						aria-label="Go to exploring web site" aria-labelledby="exploreButtonLabel">
 						<span id="exploreButtonLabel">Start exploring</span>
