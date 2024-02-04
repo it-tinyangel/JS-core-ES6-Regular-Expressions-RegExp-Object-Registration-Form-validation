@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	togglePassword.addEventListener('click', togglePasswordVisibility);
 
 	function validateForm() {
-		return validateFirstName() && validateLastName() && validateEmail() && validatePassword() && termsCheckbox.checked;
+		return validateFirstName() && validateLastName() && validateEmail() && validatePassword();
 	}
 
 	function showSuccessModal(event) {
