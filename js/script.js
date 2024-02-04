@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	function handleCheckboxChange() {
-		signUpButton.disabled = !validateForm() || !termsCheckbox.checked;
+		signUpButton.disabled = !validateForm() && !termsCheckbox.checked;
 	}
 
 	function validateFirstName() {
