@@ -12,6 +12,7 @@
 	--orange: #ffa500;
 	--dark-orange: #ff8c00;
 
+
 	--light-color: var(--white, white);
 	--gray-color: var(--gray, gray);
 	--dark-color: var(--black, black);
@@ -48,11 +49,10 @@
 	--border-radius: var(--small-spacing);
 
 	--form-width: 30rem;
-	/* --form-height: 35rem; */
 	--input-field-height: 3rem;
 
 	--modal-width: 35rem;
-	--modal-height: 28rem;
+	--modal-height: 30rem;
 	--modal-border-radius: var(--base-spacing);
 	--modal-btn-border-radius: var(--extra-large-spacing);
 
@@ -388,13 +388,9 @@ button#signUpButton.form-submit:focus {
 }
 
 /* Success modal */
-.visually-hidden {
+.visually-hidden,
+div#successModal.success-modal.visually-hidden {
 	display: none;
-}
-
-div.success-modal__wrap {
-	width: auto;
-	height: auto;
 }
 
 div#successModal.success-modal {
@@ -411,6 +407,7 @@ div#successModal.success-modal {
 }
 
 div.success-modal__header {
+	height: 50%;
 	display: grid;
 	border-top-left-radius: var(--modal-border-radius);
 	border-top-right-radius: var(--modal-border-radius);
