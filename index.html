@@ -51,7 +51,7 @@
 						<input type="password" id="password" name="password" class="form-input" placeholder="" value=""
 							aria-labelledby="passwordLabel" autocomplete="new-password" minlength="8" maxlength="15" required>
 						<!-- Show/hide password -->
-						<span class="password-toggle-icon">
+						<span class="toggle-password">
 							<i class="fa-solid fa-eye-slash"></i>
 						</span>
 						<label for="password" id="passwordLabel" class="form-label" aria-label="Enter Your password">
@@ -60,23 +60,23 @@
 					</div>
 
 					<div class="checkbox-wrap">
-						<input type="checkbox" id="agreeCheckbox" name="agreeCheckbox" class="form-checkbox" value=""
-							aria-labelledby="agreeCheckboxLabel" required>
-						<label for="agreeCheckbox" id="agreeCheckboxLabel" class="agree-label">
-							<span class="agree-control" aria-hidden="true">I agree with Privacy Policy</span>
+						<input type="checkbox" id="terms" name="terms" class="form-checkbox" value="" aria-labelledby="termsLabel"
+							required>
+						<label for="terms" id="termsLabel" class="terms-label">
+							<span class="terms-control" aria-hidden="true">I agree with Privacy Policy</span>
 						</label>
 					</div>
 				</fieldset>
 
 				<button type="submit" id="signUpButton" name="submit" class="form-submit" value="Sign Up"
-					aria-label="Go to the created profile" aria-labelledby="signUpButtonLabel" accesskey="s">
+					aria-label="Go to the created profile" aria-labelledby="signUpButtonLabel" accesskey="s" disabled>
 					<span id="signUpButtonLabel">Sign Up</span>
 				</button>
 			</form>
 
 			<div id="overlay"></div>
 
-			<!-- Success modal -->
+			<!-- Successful Modal -->
 			<div class="success-modal visually-hidden" id="successModal">
 				<div class="success-modal__header">
 					<span class="success-icon">
@@ -88,9 +88,9 @@
 					<h3 class="success-modal__title">Great!</h3>
 					<p class="success-modal__content">Your account has been created successfully.</p>
 
-					<button type="button" id="startButton" name="button" class="start-button" value="Start exploring"
-						aria-label="Go to exploring web site" aria-labelledby="startButtonLabel">
-						<span id="startButtonLabel">Start exploring</span>
+					<button type="button" id="exploreButton" name="button" class="modal-button" value="Start exploring"
+						aria-label="Go to exploring web site" aria-labelledby="exploreButtonLabel">
+						<span id="exploreButtonLabel">Start exploring</span>
 						<span class="arrow-icon"><i class="fa-solid fa-arrow-right"></i></span>
 					</button>
 				</div>
