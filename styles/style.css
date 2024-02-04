@@ -7,7 +7,7 @@
 	--blue: #6495ed;
 	--dark-blue: #4169e1;
 	--green: #228b22;
-	--red: #ff6347;
+	--red: #de0000;
 	--sea-green: #3cb371;
 	--orange: #ffa500;
 	--dark-orange: #ff8c00;
@@ -17,7 +17,7 @@
 	--dark-color: var(--black, black);
 
 	--valid-color: var(--green, forestgreen);
-	--invalid-color: var(--red, tomato);
+	--invalid-color: var(--red, red);
 	--success-color: var(--sea-green, mediumseagreen);
 
 	--border-color: var(--gray-color);
@@ -37,20 +37,22 @@
 	--size-s: .5rem;
 	--size-xs: .25rem;
 
-	--extra-large-spacing: calc(var(--large-spacing) + var(--size-s));
+	--extra-large-spacing: calc(var(--large-spacing) * 2.25);
 	--large-spacing: var(--size-l);
 	--medium-spacing: var(--size-m);
 	--base-spacing: var(--size-s);
 	--small-spacing: var(--size-xs);
+	--extra-small-spacing: calc(var(--size-xs) / 2);
 
 	--border-width: 1px;
 	--border-radius: var(--small-spacing);
 
 	--form-width: 30rem;
+	/* --form-height: 35rem; */
 	--input-field-height: 3rem;
 
 	--modal-width: 35rem;
-	--modal-height: 25rem;
+	--modal-height: 28rem;
 	--modal-border-radius: var(--base-spacing);
 	--modal-btn-border-radius: var(--extra-large-spacing);
 
@@ -131,7 +133,8 @@ fieldset.form-group :not(div.checkbox-wrap, input.form-input, label) {
 
 /* Form title */
 h2.form-title {
-	margin-bottom: calc(var(--extra-large-spacing) + var(--base-spacing));
+	margin-bottom: var(--extra-large-spacing);
+	margin-bottom: var(--extra-large-spacing);
 	font-size: var(--title-font-size);
 	font-weight: var(--title-font-weight);
 	letter-spacing: -.02em;
@@ -195,7 +198,7 @@ div.input-wrap>label.form-label {
 div.input-wrap>input.form-input:focus~label.form-label,
 div.input-wrap>input.form-input:valid~label.form-label,
 div.input-wrap>input.form-input:not(:placeholder-shown)~label {
-	padding: var(--extra-large-spacing) 0 0 var(--medium-spacing);
+	padding: calc(var(--large-spacing) + var(--base-spacing)) 0 0 var(--medium-spacing);
 	font-size: var(--small-form-font-size);
 	font-weight: var(--small-form-font-weight);
 	color: color-mix(in srgb, var(--dark-color), transparent 30%);
@@ -206,6 +209,7 @@ div.input-wrap>input.form-input:hover {
 	box-shadow: 0 0 3px var(--gray-color);
 }
 
+/* Input elements focus */
 div.input-wrap>input.form-input:focus {
 	outline: var(--border-width) solid var(--btn-color);
 	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--btn-color);
@@ -246,7 +250,7 @@ div.input-wrap>input.form-input user-valid:focus+span.field-icon::after {
 	cursor: pointer;
 }
 
-div.input-wrap>input.form-input:invalid:focus+span.field-icon::after,
+div.input-wrap>input.form-input:invalid:focus-visible+span.field-icon::after,
 div.input-wrap>input.form-input:user-invalid+span.field-icon::after,
 div.input-wrap>input.form-input user-invalid:focus+span.field-icon::after {
 	width: fit-content;
@@ -384,8 +388,13 @@ button#signUpButton.form-submit:focus {
 }
 
 /* Success modal */
-div#successModal.success-modal.visually-hidden {
+.visually-hidden {
 	display: none;
+}
+
+div.success-modal__wrap {
+	width: auto;
+	height: auto;
 }
 
 div#successModal.success-modal {
@@ -393,9 +402,7 @@ div#successModal.success-modal {
 	height: var(--modal-height);
 	display: grid;
 	grid-template-rows: repeat(2, 1fr);
-	grid-template-rows: 1.75fr 2fr;
 	position: fixed;
-	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -417,10 +424,12 @@ div.success-modal__header>span.success-icon {
 }
 
 div.success-modal__main {
-	padding: 2rem;
+	padding: var(--extra-large-spacing) 0;
 	display: grid;
+	align-items: center;
 	justify-items: center;
-	grid-template-rows: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 2fr;
+	grid-row-gap: var(--base-spacing);
 	border-bottom-left-radius: var(--modal-border-radius);
 	border-bottom-right-radius: var(--modal-border-radius);
 	background: var(--light-color);
@@ -460,6 +469,22 @@ button#exploreButton.modal-button:hover {
 
 button#exploreButton.modal-button:focus {
 	outline: none;
+}
+
+/* Alerts */
+div.validate-field__alert {
+	padding: var(--small-spacing) var(--large-spacing);
+	position: absolute;
+	z-index: 1;
+	background: var(--invalid-color);
+	border-radius: var(--border-radius);
+	color: var(--light-color);
+	background: var(--invalid-color);
+	opacity: .75;
+}
+
+div.validate-field__alert>p {
+	padding: 0 0 var(--small-spacing) 0;
 }
 
 ::selection {
