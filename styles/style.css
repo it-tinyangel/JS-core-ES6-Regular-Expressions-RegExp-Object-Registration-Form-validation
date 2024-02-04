@@ -47,11 +47,10 @@
 	--border-radius: var(--small-spacing);
 
 	--form-width: 30rem;
-	/* --form-height: 35rem; */
 	--input-field-height: 3rem;
 
-	--modal-width: 32rem;
-	--modal-height: 22rem;
+	--modal-width: 35rem;
+	--modal-height: 25rem;
 	--modal-border-radius: var(--base-spacing);
 	--modal-btn-border-radius: var(--extra-large-spacing);
 
@@ -244,6 +243,7 @@ div.input-wrap>input.form-input user-valid:focus+span.field-icon::after {
 	content: '✔';
 	text-align: end;
 	color: var(--valid-color);
+	cursor: pointer;
 }
 
 div.input-wrap>input.form-input:invalid:focus+span.field-icon::after,
@@ -257,6 +257,7 @@ div.input-wrap>input.form-input user-invalid:focus+span.field-icon::after {
 	content: '✖';
 	text-align: end;
 	color: var(--invalid-color);
+	cursor: pointer;
 }
 
 /* Hide the password reveal control in MS Edge and IE  */
@@ -278,29 +279,14 @@ div.input-wrap>input#password.form-input[type="password"]::-ms-clear {
 }
 
 /* Icon password reveal control */
-div.input-wrap>input.form-input+span.password-toggle-icon>i.fa-eye,
-div.input-wrap>input.form-input+span.password-toggle-icon>i.fa-eye-slash {
+div.input-wrap>input.form-input+span.toggle-password>i.fa-eye,
+div.input-wrap>input.form-input+span.toggle-password>i.fa-eye-slash {
 	width: fit-content;
 	position: absolute;
 	inset: var(--large-spacing) 0 0 calc(var(--form-width) - calc(var(--extra-large-spacing) * 1.1));
 	z-index: 1;
+	color: var(--gray-color);
 	cursor: pointer;
-}
-
-div.input-wrap>input.form-input+span.password-toggle-icon>i.fa-eye-slash {
-	color: transparent;
-}
-
-div.input-wrap>input.form-input:valid:focus+span.password-toggle-icon>i.fa-eye-slash,
-div.input-wrap>input.form-input:user-valid+span.password-toggle-icon>i.fa-eye-slash,
-div.input-wrap>input.form-input:user-valid:focus+span.password-toggle-icon>i.fa-eye-slash {
-	color: var(--valid-color);
-}
-
-div.input-wrap>input.form-input:invalid:focus+span.password-toggle-icon>i.fa-eye-slash,
-div.input-wrap>input.form-input:user-invalid+span.password-toggle-icon>i.fa-eye-slash,
-div.input-wrap>input.form-input:user-invalid:focus+span.password-toggle-icon>i.fa-eye-slash {
-	color: var(--invalid-color);
 }
 
 /* Checkbox field */
@@ -311,7 +297,7 @@ div.checkbox-wrap {
 	gap: var(--medium-spacing);
 }
 
-div.checkbox-wrap>input#agreeCheckbox.form-checkbox[type='checkbox'] {
+div.checkbox-wrap>input#terms.form-checkbox[type='checkbox'] {
 	width: 21px;
 	height: 21px;
 	width: 19px;
@@ -329,27 +315,27 @@ div.checkbox-wrap>input#agreeCheckbox.form-checkbox[type='checkbox'] {
 	cursor: pointer;
 }
 
-div.checkbox-wrap>input#agreeCheckbox.form-checkbox[type='checkbox']:hover {
+div.checkbox-wrap>input#terms.form-checkbox[type='checkbox']:hover {
 	box-shadow: 0 0 3px var(--gray-color);
 }
 
-div.checkbox-wrap>input#agreeCheckbox.form-checkbox[type='checkbox']:checked:hover {
+div.checkbox-wrap>input#terms.form-checkbox[type='checkbox']:checked:hover {
 	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--checkbox-checked-color);
 }
 
-div.checkbox-wrap>input#agreeCheckbox.form-checkbox[type='checkbox']:focus {
+div.checkbox-wrap>input#terms.form-checkbox[type='checkbox']:focus {
 	border-color: var(--checkbox-border-color);
 	background-color: var(--light-color);
 }
 
-div.checkbox-wrap>input#agreeCheckbox.form-checkbox[type='checkbox']:checked {
+div.checkbox-wrap>input#terms.form-checkbox[type='checkbox']:checked {
 	position: relative;
 	border-color: var(--checkbox-checked-hover-color);
 	box-shadow: 0 0 3px var(--gray-color);
 	background-color: transparent;
 }
 
-div.checkbox-wrap>input#agreeCheckbox.form-checkbox[type='checkbox']:checked:before {
+div.checkbox-wrap>input#terms.form-checkbox[type='checkbox']:checked:before {
 	content: '✔';
 	width: 17px;
 	height: 17px;
@@ -362,7 +348,7 @@ div.checkbox-wrap>input#agreeCheckbox.form-checkbox[type='checkbox']:checked:bef
 	background-color: var(--checkbox-checked-color);
 }
 
-div.checkbox-wrap>label#agreeCheckboxLabel.agree-label>span.agree-control {
+div.checkbox-wrap>label#termsLabel.terms-label>span.terms-control {
 	vertical-align: top;
 	line-height: 1.1;
 }
@@ -409,16 +395,18 @@ div#successModal.success-modal {
 	grid-template-rows: repeat(2, 1fr);
 	grid-template-rows: 1.75fr 2fr;
 	position: fixed;
-	top: 46.5%;
+	position: absolute;
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 1;
 	border-radius: var(--modal-border-radius);
-	background-color: var(--light-color);
 }
 
 div.success-modal__header {
 	display: grid;
+	border-top-left-radius: var(--modal-border-radius);
+	border-top-right-radius: var(--modal-border-radius);
 	background: var(--success-color);
 }
 
@@ -433,7 +421,9 @@ div.success-modal__main {
 	display: grid;
 	justify-items: center;
 	grid-template-rows: 1fr 1fr 1fr;
-	background-color: var(--light-color);
+	border-bottom-left-radius: var(--modal-border-radius);
+	border-bottom-right-radius: var(--modal-border-radius);
+	background: var(--light-color);
 }
 
 div.success-modal__main>h3.success-modal__title {
@@ -443,7 +433,7 @@ div.success-modal__main>h3.success-modal__title {
 }
 
 /* Start exploring button */
-button#startButton.start-button {
+button#exploreButton.modal-button {
 	padding: var(--medium-spacing) var(--extra-large-spacing);
 	border: 0;
 	outline: 0;
@@ -456,18 +446,19 @@ button#startButton.start-button {
 	transition: all .3s ease;
 	cursor: pointer;
 }
-button#startButton.start-button>span.arrow-icon {
+
+button#exploreButton.modal-button>span.arrow-icon {
 	padding: 0 0 0 var(--small-spacing);
 }
 
-button#startButton.start-button:is(:hover, :active, :focus),
-button#startButton.start-button:hover {
+button#exploreButton.modal-button:is(:hover, :active, :focus),
+button#exploreButton.modal-button:hover {
 	background: var(--btn-modal-color-hover);
 	border: var(--border-width) solid var(--btn-modal-color-hover);
 	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--btn-modal-color-hover);
 }
 
-button#startButton.start-button:focus {
+button#exploreButton.modal-button:focus {
 	outline: none;
 }
 
