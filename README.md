@@ -4,3 +4,5 @@
 ***
 
 ### Registration Form validation
+
+Implementation of form validation and its interactivity.
