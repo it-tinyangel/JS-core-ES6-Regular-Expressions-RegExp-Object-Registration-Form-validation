@@ -14,7 +14,8 @@
 	<main>
 		<section>
 			<!-- Sign Up -->
-			<form name="signUpForm" id="signUpForm" class="form" aria-label="Sign Up in the Form" autocomplete="on">
+			<form name="signUpForm" id="signUpForm" class="form" aria-label="Sign Up in the Form" autocomplete="on"
+				novalidate>
 				<fieldset class="form-group">
 					<legend aria-label="Please, Sign Up">
 						<h2 class="form-title">Please, Sign Up</h2>
@@ -22,13 +23,13 @@
 
 					<div class="input-wrap">
 						<input type="text" id="firstName" name="firstName" class="form-input" placeholder="" value=""
-							aria-labelledby="firstNameLabel" autocomplete="given-name" required>
+							title="4 to 8 lowercase letters" aria-labelledby="firstNameLabel" autocomplete="given-name" required>
 						<span class="field-icon"></span>
 						<label for="firstName" id="firstNameLabel" class="form-label" aria-label="Enter Your First Name">
 							<span>First Name</span>
 						</label>
 
-						<div id="errorFirstName" class="error-message visually-hidden">
+						<div id="errorFirstName" class="error-message">
 							<p>Please, provide a valid First Name.</p>
 						</div>
 					</div>
@@ -41,20 +42,20 @@
 							<span>Last Name</span>
 						</label>
 
-						<div id="errorLastName" class="error-message visually-hidden">
+						<div id="errorLastName" class="error-message">
 							<p>Please, provide a valid Last Name.</p>
 						</div>
 					</div>
 
 					<div class="input-wrap">
 						<input type="email" id="email" name="email" class="form-input" placeholder="" value=""
-							aria-labelledby="emailLabel" autocomplete="email" required>
+							aria-labelledby="emailLabel" autocomplete="email" multiple required>
 						<span class="field-icon"></span>
 						<label for="email" id="emailLabel" class="form-label" aria-label="Enter Your email address">
 							<span>Email address</span>
 						</label>
 
-						<div id="errorEmail" class="error-message visually-hidden">
+						<div id="errorEmail" class="error-message">
 							<p>Please, provide a valid Email address.</p>
 						</div>
 					</div>
@@ -70,15 +71,15 @@
 							<span>Password</span>
 						</label>
 
-						<div id="errorPassword" class="error-message visually-hidden">
+						<div id="errorPassword" class="error-message">
 							<p>Please, provide a valid password.</p>
 						</div>
 					</div>
 
 					<div class="checkbox-wrap">
-						<input type="checkbox" id="agreeTerms" name="agreeTerms" class="form-checkbox" value="" aria-labelledby="agreeTermsLabel"
-							required>
-						<label for="agreeTerms" id="agreeTermsLabel" class="agreeTerms-label">
+						<input type="checkbox" id="agreeTerms" name="agreeTerms" class="form-checkbox" value=""
+							aria-labelledby="agreeTermsLabel" required>
+						<label for="agreeTerms" id="agreeTermsLabel" class="form-checkbox__label">
 							<span class="agreeTerms-control" aria-hidden="true">I agree with Privacy Policy</span>
 						</label>
 					</div>
@@ -91,7 +92,7 @@
 			</form>
 
 			<!-- Successful -->
-			<div class="success-modal visually-hidden" id="successModal">
+			<div class="success-modal" id="successModal">
 				<div class="success-modal__header">
 					<span class="success-icon">
 						<i class="fa-regular fa-circle-check"></i>
