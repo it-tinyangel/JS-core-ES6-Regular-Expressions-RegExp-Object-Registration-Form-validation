@@ -5,63 +5,99 @@ document.addEventListener('DOMContentLoaded', () => {
 			lastName: form.lastName,
 			email: form.email,
 			password: form.password,
+			terms: form.agreeTerms,
+			signUpButton: form.signUpButton,
 		};
-	const alertInputMessage = document.querySelector('.validate-field__alert');
 
 	const togglePassword = document.querySelector('.toggle-password');
-	const togglePasswordIcon = document.querySelector('.toggle-password').querySelector('i');
-	const termsCheckbox = document.querySelector('#terms');
-	const signUpButton = document.querySelector('#signUpButton');
+	const togglePasswordIcon = togglePassword.querySelector('i');
 
 	const successModal = document.querySelector('#successModal');
 	const exploreButton = document.querySelector('#exploreButton');
 
-	const { firstName, lastName, email, password } = elements;
+	const {
+		firstName, lastName, email, password, terms, signUpButton
+	} = elements;
 
-	form.addEventListener('submit', showSuccessModal);
-	signUpButton.addEventListener('click', showSuccessModal);
-	exploreButton.addEventListener('click', closeSuccessModal);
-	togglePassword.addEventListener('click', togglePasswordVisibility);
-	termsCheckbox.addEventListener('change', handleCheckboxChange);
-
-	function validateForm() {
-		return validateFirstName() && validateLastName() && validateEmail() && validatePassword();
-	}
-
-	function showSuccessModal(event) {
-		event.preventDefault();
-		if (validateForm()) {
-			successModal.style.display = 'block';
+	const validations = [
+		{
+			input: firstName,
+			regex: /^[a-zA-Z]{1,20}$/,
+			error: document.querySelector('#firstName')
+		},
+		{
+			input: lastName,
+			regex: /^[a-zA-Z]{1,20}$/,
+			error: document.querySelector('#lastName')
+		},
+		{
+			input: email,
+			regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+			error: document.querySelector('#password')
+		},
+		{
+			input: password,
+			regex: /^[a-zA-Z0-9]{8,15}$/,
+			error: document.querySelector('#agreeTerms')
 		}
-	};
+	];
 
-	function closeSuccessModal() {
-		successModal.style.display = 'none';
+	form.addEventListener('input', validateFormInput);
+	terms.addEventListener('change', handleToggleSignUpButton);
+	signUpButton.addEventListener('click', handleFormSubmit);
+	exploreButton.addEventListener('click', handleExploreButtonClick);
+	togglePassword.addEventListener('click', handleTogglePasswordClick);
+
+	function validateInput(input, regex, error) {
+		const trimmedValue = input.value.trim();
+		const isValid = regex.test(trimmedValue) && /[a-zA-Z0-9]/.test(trimmedValue);
+		if (isValid) {
+			error.classList.remove('active');
+		} else {
+			error.classList.add('active');
+		}
+		return isValid;
+	}
+
+	function validateFormInput() {
+		const isValid = validations.every(validation =>
+			validateInput(validation.input, validation.regex, validation.error)
+		);
+		signUpButton.disabled = !isValid || !terms.checked;
+	}
+
+	function toggleButtonState() {
+		if (signUpButton.readOnly) {
+			signUpButton.readOnly = false;
+		} else {
+			signUpButton.readOnly = true;
+		}
+	}
+
+	function handleToggleSignUpButton() {
+		toggleButtonState();
+		validateFormInput();
+	}
+
+	function showModal() {
+		successModal.classList.add('active');
+	}
+
+	function hideModal() {
+		successModal.classList.remove('active');
+	}
+
+	function handleFormSubmit(event) {
+		event.preventDefault();
+		showModal();
+	}
+
+	function handleExploreButtonClick() {
+		hideModal();
 		form.reset();
-	};
-
-	function handleCheckboxChange() {
-		signUpButton.disabled = !validateForm() || !termsCheckbox.checked;
 	}
-
-	function validateFirstName() {
-		const nameReg = /^[a-zA-Z]{1,20}$/;
-		return nameReg.test(firstName.value);
-	}
-
-	function validateLastName() {
-		const nameReg = /^[a-zA-Z]{1,20}$/;
-		return nameReg.test(lastName.value);
-	}
-
-	function validateEmail() {
-		const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		return emailReg.test(email.value);
-	}
-
-	function validatePassword() {
-		const passwordReg = /^[a-zA-Z0-9]{8,15}$/;
-		return passwordReg.test(password.value);
+	function handleTogglePasswordClick() {
+		password.getAttribute("type") === 'password' ? showPassword() : hidePassword();
 	}
 
 	function showPassword() {
@@ -72,9 +108,5 @@ document.addEventListener('DOMContentLoaded', () => {
 	function hidePassword() {
 		password.setAttribute('type', 'password');
 		togglePasswordIcon.className = 'fa-solid fa-eye-slash';
-	}
-
-	function togglePasswordVisibility() {
-		password.getAttribute("type") === 'password' ? showPassword() : hidePassword();
 	}
 });
