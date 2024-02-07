@@ -203,11 +203,13 @@ div.input-wrap>input.form-input:user-valid:focus {
 	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--valid-color);
 }
 
-div.input-wrap>input.form-input:user-invalid {
+div.input-wrap.invalid>input.form-input:invalid,
+div.input-wrap.invalid>input.form-input:user-invalid {
 	outline: var(--border-width) solid var(--invalid-color);
 }
 
-div.input-wrap>input.form-input:user-invalid:focus {
+div.input-wrap.invalid>input.form-input:invalid:focus,
+div.input-wrap>input.form-input:focus:user-invalid {
 	outline: var(--border-width) solid var(--invalid-color);
 	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--invalid-color);
 }
@@ -237,13 +239,11 @@ div.input-wrap>input.form-input:not(:placeholder-shown)~label {
 	transform: translateY(-1.5rem);
 }
 
-/* Icons valid and invalid */
-div.input-wrap>input.form-input:focus:valid+span.field-icon::after,
-div.input-wrap>input.form-input:focus-visible:valid+span.field-icon::after,
-div.input-wrap>input.form-input:user-valid+span.field-icon::after,
-div.input-wrap>input.form-input:focus:user-valid+span.field-icon::after,
-div.input-wrap>input.form-input:focus-visible:user-valid+span.field-icon::after {
+/* Icons valid and invalid data */
+div.input-wrap.valid>input.form-input:valid+span.field-icon::after,
+div.input-wrap.valid>input.form-input:focus:valid+span.field-icon::after {
 	width: fit-content;
+	display: block;
 	position: absolute;
 	inset: var(--medium-spacing) 0 0 calc(var(--form-width) - var(--extra-large-spacing));
 	z-index: 1;
@@ -253,11 +253,8 @@ div.input-wrap>input.form-input:focus-visible:user-valid+span.field-icon::after 
 	cursor: pointer;
 }
 
-div.input-wrap>input.form-input:focus:invalid+span.field-icon::after,
-div.input-wrap>input.form-input:focus-visible:invalid+span.field-icon::after,
-div.input-wrap>input.form-input:user-invalid+span.field-icon::after,
-div.input-wrap>input.form-input:focus:user-invalid+span.field-icon::after,
-div.input-wrap>input.form-input:focus-visible:user-invalid+span.field-icon::after {
+div.input-wrap.invalid>input.form-input:invalid+span.field-icon::after,
+div.input-wrap.invalid>input.form-input:focus:invalid+span.field-icon::after {
 	width: fit-content;
 	display: block;
 	position: absolute;
