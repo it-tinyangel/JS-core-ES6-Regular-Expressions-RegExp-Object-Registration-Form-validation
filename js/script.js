@@ -1,61 +1,61 @@
 document.addEventListener('DOMContentLoaded', () => {
-	const form = document.forms.signUpForm,
-		elements = {
-			firstName: form.firstName,
-			lastName: form.lastName,
-			email: form.email,
-			password: form.password,
-			terms: form.agreeTerms,
-			signUpButton: form.signUpButton,
-		};
-
+	const form = document.querySelector('#signUpForm');
+	const terms = document.querySelector('#agreeTerms');
+	const signUpButton = document.querySelector('#signUpButton');
+	const successModal = document.querySelector('#successModal');
+	const exploreButton = document.querySelector('#exploreButton');
 	const togglePassword = document.querySelector('.toggle-password');
 	const togglePasswordIcon = togglePassword.querySelector('i');
 
-	const successModal = document.querySelector('#successModal');
-	const exploreButton = document.querySelector('#exploreButton');
-
-	const {
-		firstName, lastName, email, password, terms, signUpButton
-	} = elements;
-
 	const validations = [
 		{
-			input: firstName,
+			input: document.getElementById('firstName'),
 			regex: /^[a-zA-Z]{1,20}$/,
-			error: document.querySelector('#firstName')
+			error: document.querySelector('#errorFirstName')
 		},
 		{
-			input: lastName,
+			input: document.getElementById('lastName'),
 			regex: /^[a-zA-Z]{1,20}$/,
-			error: document.querySelector('#lastName')
+			error: document.querySelector('#errorLastName')
 		},
 		{
-			input: email,
+			input: document.getElementById('email'),
 			regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-			error: document.querySelector('#password')
+			error: document.querySelector('#errorEmail')
 		},
 		{
-			input: password,
+			input: document.getElementById('password'),
 			regex: /^[a-zA-Z0-9]{8,15}$/,
-			error: document.querySelector('#agreeTerms')
+			error: document.querySelector('#errorPassword')
 		}
 	];
 
 	form.addEventListener('input', validateFormInput);
-	terms.addEventListener('change', handleToggleSignUpButton);
+	terms.addEventListener('change', handleTermsChange);
 	signUpButton.addEventListener('click', handleFormSubmit);
 	exploreButton.addEventListener('click', handleExploreButtonClick);
 	togglePassword.addEventListener('click', handleTogglePasswordClick);
 
-	function validateInput(input, regex, error) {
+	function validateInput(input, regex, errorElement) {
 		const trimmedValue = input.value.trim();
-		const isValid = regex.test(trimmedValue) && /[a-zA-Z0-9]/.test(trimmedValue);
+		const isValid = regex.test(trimmedValue) && /\S/.test(trimmedValue); 
+
 		if (isValid) {
-			error.classList.remove('active');
+			input.parentElement.classList.remove('invalid');
+			input.parentElement.classList.add('valid');
 		} else {
-			error.classList.add('active');
+			input.parentElement.classList.remove('valid');
+			input.parentElement.classList.add('invalid');
 		}
+
+		if (!isValid || !input.checkValidity()) {
+			errorElement.innerHTML = `<p>Please, provide a valid ${input.name}.</p>`;
+			errorElement.classList.add('active');
+		} else {
+			errorElement.innerHTML = '';
+			errorElement.classList.remove('active');
+		}
+
 		return isValid;
 	}
 
@@ -66,25 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		signUpButton.disabled = !isValid || !terms.checked;
 	}
 
-	function toggleButtonState() {
-		if (signUpButton.readOnly) {
-			signUpButton.readOnly = false;
-		} else {
-			signUpButton.readOnly = true;
-		}
-	}
-
-	function handleToggleSignUpButton() {
-		toggleButtonState();
-		validateFormInput();
-	}
-
 	function showModal() {
 		successModal.classList.add('active');
 	}
 
 	function hideModal() {
 		successModal.classList.remove('active');
+		form.reset();
 	}
 
 	function handleFormSubmit(event) {
@@ -94,8 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function handleExploreButtonClick() {
 		hideModal();
-		form.reset();
 	}
+
+	function toggleButtonState() {
+		if (signUpButton.readOnly) {
+			signUpButton.readOnly = false;
+		} else {
+			signUpButton.readOnly = true;
+		}
+	}
+
+	function handleTermsChange() {
+		toggleButtonState();
+		validateFormInput();
+	}
+
 	function handleTogglePasswordClick() {
 		password.getAttribute("type") === 'password' ? showPassword() : hidePassword();
 	}
