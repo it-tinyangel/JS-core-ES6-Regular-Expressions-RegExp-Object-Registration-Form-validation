@@ -151,6 +151,7 @@ div.input-wrap>input.form-input {
 	display: block;
 	border: 0;
 	outline: 0;
+	appearance: none;
 	border-radius: var(--border-radius);
 	border: var(--border-width) solid var(--border-color);
 	font-size: var(--base-form-font-size);
@@ -188,8 +189,8 @@ div.input-wrap>input.form-input:focus {
 	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--valid-color);
 }
 
-div.input-wrap>input.form-input:hover {
-	box-shadow: 0 0 3px var(--gray-color);
+div.input-wrap>input.form-input:hover:not(:focus, :valid) {
+	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--gray-color);
 }
 
 div.input-wrap>input.form-input:valid,
@@ -237,9 +238,11 @@ div.input-wrap>input.form-input:not(:placeholder-shown)~label {
 }
 
 /* Icons valid and invalid */
-div.input-wrap>input.form-input:valid:focus+span.field-icon::after,
+div.input-wrap>input.form-input:focus:valid+span.field-icon::after,
+div.input-wrap>input.form-input:focus-visible:valid+span.field-icon::after,
 div.input-wrap>input.form-input:user-valid+span.field-icon::after,
-div.input-wrap>input.form-input user-valid:focus+span.field-icon::after {
+div.input-wrap>input.form-input:focus:user-valid+span.field-icon::after,
+div.input-wrap>input.form-input:focus-visible:user-valid+span.field-icon::after {
 	width: fit-content;
 	position: absolute;
 	inset: var(--medium-spacing) 0 0 calc(var(--form-width) - var(--extra-large-spacing));
@@ -250,9 +253,11 @@ div.input-wrap>input.form-input user-valid:focus+span.field-icon::after {
 	cursor: pointer;
 }
 
-div.input-wrap>input.form-input:invalid:focus-visible+span.field-icon::after,
+div.input-wrap>input.form-input:focus:invalid+span.field-icon::after,
+div.input-wrap>input.form-input:focus-visible:invalid+span.field-icon::after,
 div.input-wrap>input.form-input:user-invalid+span.field-icon::after,
-div.input-wrap>input.form-input user-invalid:focus+span.field-icon::after {
+div.input-wrap>input.form-input:focus:user-invalid+span.field-icon::after,
+div.input-wrap>input.form-input:focus-visible:user-invalid+span.field-icon::after {
 	width: fit-content;
 	display: block;
 	position: absolute;
@@ -293,53 +298,30 @@ div.input-wrap>input.form-input+span.toggle-password>i.fa-eye-slash {
 	cursor: pointer;
 }
 
-/* Checkbox field */
+/* Checkbox */
 div.checkbox-wrap {
 	display: grid;
-	grid-template-columns: auto auto;
+	grid-template-columns: auto 1fr;
 	justify-content: start;
+	align-self: center;
 	gap: var(--medium-spacing);
 }
 
 div.checkbox-wrap>input#agreeTerms.form-checkbox[type='checkbox'] {
-	width: 21px;
-	height: 21px;
 	width: 19px;
 	height: 19px;
+	align-self: center;
 	border: 0;
 	outline: 0;
 	appearance: none;
-	user-select: none;
 	border-radius: var(--border-radius);
 	border: var(--border-width) solid var(--checkbox-border-color);
-	color: var(--light-color);
-	color: crimson;
 	background-color: var(--light-color);
 	transition: all .2s ease;
 	cursor: pointer;
 }
 
-div.checkbox-wrap>input#agreeTerms.form-checkbox[type='checkbox']:hover {
-	box-shadow: 0 0 3px var(--gray-color);
-}
-
-div.checkbox-wrap>input#agreeTerms.form-checkbox[type='checkbox']:checked:hover {
-	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--checkbox-checked-color);
-}
-
-div.checkbox-wrap>input#agreeTerms.form-checkbox[type='checkbox']:focus {
-	border-color: var(--checkbox-border-color);
-	background-color: var(--light-color);
-}
-
-div.checkbox-wrap>input#agreeTerms.form-checkbox[type='checkbox']:checked {
-	position: relative;
-	border-color: var(--checkbox-checked-hover-color);
-	box-shadow: 0 0 3px var(--gray-color);
-	background-color: transparent;
-}
-
-div.checkbox-wrap>input#agreeTerms.form-checkbox[type='checkbox']:checked:before {
+div.checkbox-wrap>input#agreeTerms.form-checkbox[type='checkbox']::after {
 	content: '✔';
 	width: 17px;
 	height: 17px;
@@ -347,14 +329,29 @@ div.checkbox-wrap>input#agreeTerms.form-checkbox[type='checkbox']:checked:before
 	position: absolute;
 	line-height: 1.35;
 	border-radius: var(--border-radius);
+	border-color: var(--checkbox-checked-hover-color);
 	outline: var(--border-width) solid var(--checkbox-checked-hover-color);
 	color: var(--light-color);
 	background-color: var(--checkbox-checked-color);
+	visibility: hidden;
 }
 
-div.checkbox-wrap>label#agreeTermsLabel.terms-label {
-	padding: 0 0 var(--small-spacing) 0;
-	width: 100%;
+div.checkbox-wrap>input#agreeTerms.form-checkbox[type='checkbox']:checked::after {
+	visibility: visible;
+}
+
+div.checkbox-wrap>input#agreeTerms.form-checkbox[type='checkbox']:not(:checked):hover {
+	box-shadow: 0 0 3px var(--gray-color);
+}
+
+div.checkbox-wrap>input#agreeTerms.form-checkbox[type='checkbox']:focus {
+	border-color: var(--checkbox-border-color);
+	background-color: var(--light-color);
+}
+
+div.checkbox-wrap>label#agreeTermsLabel.form-checkbox__label {
+	justify-self: stretch;
+	align-self: center;
 	cursor: pointer;
 }
 
@@ -389,15 +386,18 @@ button#signUpButton.form-submit:focus {
 }
 
 /* Successful modal */
-.visually-hidden,
-div#successModal.success-modal.visually-hidden {
+.visually-hidden {
 	display: none;
+}
+
+div#successModal.success-modal.active {
+	display: grid;
 }
 
 div#successModal.success-modal {
 	width: var(--modal-width);
 	height: var(--modal-height);
-	display: grid;
+	display: none;
 	grid-template-rows: repeat(2, 1fr);
 	position: fixed;
 	top: 50%;
@@ -470,11 +470,15 @@ button#exploreButton.modal-button:focus {
 }
 
 /* Errors alerts */
+div.error-message.active {
+	display: block;
+}
+
 div.error-message {
 	padding: var(--small-spacing) var(--large-spacing);
+	display: none;
 	position: absolute;
 	z-index: 1;
-	background: var(--invalid-color);
 	border-radius: var(--border-radius);
 	color: var(--light-color);
 	background: var(--invalid-color);
