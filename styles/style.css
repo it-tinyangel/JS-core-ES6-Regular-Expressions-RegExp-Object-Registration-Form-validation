@@ -144,7 +144,9 @@ div.input-wrap {
 	position: relative;
 }
 
-div.input-wrap>input.form-input {
+div.input-wrap>input.form-input,
+div.input-wrap.is-valid>input.form-input,
+div.input-wrap.is-invalid>input.form-input {
 	width: 100%;
 	height: 100%;
 	padding: 0 0 0 var(--medium-spacing);
@@ -175,7 +177,7 @@ div.input-wrap>input.form-input:auto-fill {
 
 div.input-wrap>input.form-input:auto-fill~label.form-label {
 	color: color-mix(in srgb, var(--dark-color), transparent 30%);
-	transform: translateY(-1rem);
+	transform: translateY(-1.5rem);
 }
 
 div.input-wrap>input.form-input:is(:focus, :valid),
@@ -184,34 +186,30 @@ div.input-wrap>input.form-input:not(:placeholder-shown) {
 }
 
 /* Input defaults and validation */
-div.input-wrap>input.form-input:focus {
-	outline: var(--border-width) solid var(--valid-color);
-	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--valid-color);
-}
-
-div.input-wrap>input.form-input:hover:not(:focus, :valid) {
-	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--gray-color);
-}
-
 div.input-wrap>input.form-input:valid,
 div.input-wrap>input.form-input:user-valid {
 	outline: var(--border-width) solid var(--valid-color);
 }
 
+div.input-wrap>input.form-input:user-invalid {
+	outline: var(--border-width) solid var(--invalid-color);
+}
+
+div.input-wrap>input.form-input:focus,
+div.input-wrap>input.form-input:valid:focus,
 div.input-wrap>input.form-input:user-valid:focus {
 	outline: var(--border-width) solid var(--valid-color);
 	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--valid-color);
 }
 
-div.input-wrap.invalid>input.form-input:invalid,
-div.input-wrap.invalid>input.form-input:user-invalid {
-	outline: var(--border-width) solid var(--invalid-color);
-}
-
-div.input-wrap.invalid>input.form-input:invalid:focus,
-div.input-wrap>input.form-input:focus:user-invalid {
+div.input-wrap>input.form-input:invalid:focus,
+div.input-wrap>input.form-input:user-invalid:focus {
 	outline: var(--border-width) solid var(--invalid-color);
 	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--invalid-color);
+}
+
+div.input-wrap>input.form-input:hover:not(:focus, :valid) {
+	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--gray-color);
 }
 
 /* Floating labels */
@@ -235,13 +233,13 @@ div.input-wrap>input.form-input:not(:placeholder-shown)~label {
 	padding: var(--extra-small-spacing) 0 0 var(--medium-spacing);
 	font-size: var(--small-form-font-size);
 	font-weight: var(--small-form-font-weight);
-	color: color-mix(in srgb, var(--dark-color), transparent 30%);
+	color: var(--gray-color);
 	transform: translateY(-1.5rem);
 }
 
 /* Icons valid and invalid data */
-div.input-wrap.valid>input.form-input:valid+span.field-icon::after,
-div.input-wrap.valid>input.form-input:focus:valid+span.field-icon::after {
+div.input-wrap>input.form-input:valid+span.field-icon::after,
+div.input-wrap>input.form-input:valid:focus+span.field-icon::after {
 	width: fit-content;
 	display: block;
 	position: absolute;
@@ -253,8 +251,8 @@ div.input-wrap.valid>input.form-input:focus:valid+span.field-icon::after {
 	cursor: pointer;
 }
 
-div.input-wrap.invalid>input.form-input:invalid+span.field-icon::after,
-div.input-wrap.invalid>input.form-input:focus:invalid+span.field-icon::after {
+div.input-wrap>input.form-input:user-invalid+span.field-icon::after,
+div.input-wrap>input.form-input:invalid:focus+span.field-icon::after {
 	width: fit-content;
 	display: block;
 	position: absolute;
@@ -472,11 +470,12 @@ div.error-message.active {
 }
 
 div.error-message {
-	padding: var(--small-spacing) var(--large-spacing);
+	padding: var(--extra-small-spacing) var(--large-spacing);
 	display: none;
 	position: absolute;
 	z-index: 1;
 	border-radius: var(--border-radius);
+	font-size: var(--small-form-font-size);
 	color: var(--light-color);
 	background: var(--invalid-color);
 	opacity: .75;
