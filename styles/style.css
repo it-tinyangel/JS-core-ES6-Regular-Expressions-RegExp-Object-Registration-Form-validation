@@ -47,11 +47,15 @@
 	--border-width: 1px;
 	--border-radius: var(--small-spacing);
 
+	--min-form-width: 300px;
 	--form-width: 480px;
 	--input-field-height: 3rem;
 
+	--min-modal-width: 310px;
+	--min-modal-height: 470px;
 	--modal-width: 560px;
 	--modal-height: 460px;
+
 	--modal-border-radius: var(--base-spacing);
 	--modal-btn-border-radius: var(--extra-large-spacing);
 
@@ -252,7 +256,6 @@ div.input-wrap>input.form-input:valid:focus+span.field-icon::after {
 	content: '✔';
 	text-align: end;
 	color: var(--valid-color);
-	cursor: pointer;
 }
 
 div.input-wrap>input.form-input.has-only-whitespace:valid+span.field-icon::after,
@@ -268,7 +271,6 @@ div.input-wrap>input.form-input:invalid:focus+span.field-icon::after {
 	content: '✖';
 	text-align: end;
 	color: var(--invalid-color);
-	cursor: pointer;
 }
 
 /* Hide the password reveal control in MS Edge and IE  */
@@ -292,6 +294,16 @@ div.input-wrap>input#password.form-input[type="password"]::-ms-clear {
 /* Icon password reveal control */
 div.input-wrap>input.form-input+span.toggle-password>i.fa-eye,
 div.input-wrap>input.form-input+span.toggle-password>i.fa-eye-slash {
+	visibility: hidden;
+}
+
+div.input-wrap>input.form-input:user-valid+span.toggle-password>i.fa-eye,
+div.input-wrap>input.form-input:user-valid+span.toggle-password>i.fa-eye-slash,
+div.input-wrap>input.form-input:user-invalid+span.toggle-password>i.fa-eye,
+div.input-wrap>input.form-input:user-invalid+span.toggle-password>i.fa-eye-slash,
+div.input-wrap>input.form-input:focus+span.toggle-password>i.fa-eye,
+div.input-wrap>input.form-input:focus+span.toggle-password>i.fa-eye-slash {
+	visibility: visible;
 	width: fit-content;
 	position: absolute;
 	inset: var(--large-spacing) 0 0 calc(var(--form-width) - calc(var(--extra-large-spacing) * 1.1));
@@ -388,16 +400,12 @@ button#signUpButton.form-submit:focus {
 }
 
 /* Successful modal */
-div.input-wrap>input.form-input+span.toggle-password>i.visually-hidden,
-.visually-hidden {
-	display: none;
-}
-
 div#successModal.success-modal.active {
 	display: grid;
 }
 
 div#successModal.success-modal {
+	margin: auto;
 	width: var(--modal-width);
 	height: var(--modal-height);
 	display: none;
@@ -497,4 +505,15 @@ div.error-message>p {
 ::selection {
 	color: var(--light-color);
 	background: var(--dark-blue, royalblue);
+}
+
+/* Media Queries */
+@media only screen and (max-width: 679px) {
+	form.form {
+		min-width: var(--min-form-width);
+	}
+	div#successModal.success-modal {
+		width: var(--min-modal-width);
+		height: var(--min-modal-height);
+	}
 }
