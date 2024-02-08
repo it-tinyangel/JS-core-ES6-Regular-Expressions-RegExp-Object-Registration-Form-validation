@@ -191,6 +191,8 @@ div.input-wrap>input.form-input:user-valid {
 	outline: var(--border-width) solid var(--valid-color);
 }
 
+div.input-wrap>input.form-input.has-only-whitespace:valid,
+div.input-wrap>input.form-input.has-only-whitespace:user-valid,
 div.input-wrap>input.form-input:user-invalid {
 	outline: var(--border-width) solid var(--invalid-color);
 }
@@ -202,6 +204,8 @@ div.input-wrap>input.form-input:user-valid:focus {
 	box-shadow: 0 0 3px var(--gray-color), 0 0 5px var(--valid-color);
 }
 
+div.input-wrap>input.form-input.has-only-whitespace:valid:focus,
+div.input-wrap>input.form-input.has-only-whitespace:user-valid:focus,
 div.input-wrap>input.form-input:invalid:focus,
 div.input-wrap>input.form-input:user-invalid:focus {
 	outline: var(--border-width) solid var(--invalid-color);
