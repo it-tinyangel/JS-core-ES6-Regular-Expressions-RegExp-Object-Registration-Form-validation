@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const form = document.querySelector('#signUpForm');
 	const terms = document.querySelector('#agreeTerms');
 	const signUpButton = document.querySelector('#signUpButton');
+
 	const successModal = document.querySelector('#successModal');
 	const exploreButton = document.querySelector('#exploreButton');
 
@@ -11,12 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	const validations = [
 		{
 			input: document.getElementById('firstName'),
-			regex: /^(?!\s*$)[a-zA-Z]+$/,
+			regex: /^(?!\s+$)[a-zA-Z]+$/,
 			error: document.querySelector('#errorFirstName'),
 		},
 		{
 			input: document.getElementById('lastName'),
-			regex: /^(?!\s*$)[a-zA-Z]+$/,
+			regex: /^(?!\s+$)[a-zA-Z]+$/,
 			error: document.querySelector('#errorLastName')
 		},
 		{
@@ -33,14 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const validateFieldAndShowError = (input, regex, error) => {
 		const trimmedValue = input.value.trim();
-		const isValid = regex.test(trimmedValue);
+		const hasNonWhitespaceChars = /\S/.test(input.value); 
+		const isValid = regex.test(trimmedValue) && hasNonWhitespaceChars;
 
 		input.parentElement.classList.toggle('is-invalid', !isValid);
 		input.parentElement.classList.toggle('is-valid', isValid);
+		input.classList.toggle('has-only-whitespace', !hasNonWhitespaceChars); 
 
 		error.innerHTML = isValid ? '' : `<p>Please, provide a valid ${input.name}.</p>`;
 		error.classList.toggle('active', !isValid || !input.checkValidity());
-
+		
 		return isValid;
 	};
 
@@ -48,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const isValid = validations.every(validation =>
 			validateFieldAndShowError(validation.input, validation.regex, validation.error)
 		);
+				
 		signUpButton.disabled = !isValid || !terms.checked;
 	};
 
@@ -73,13 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (signUpButton.readOnly) {
 			signUpButton.readOnly = false;
 		} else {
-			signUpButton.readOnly = true;
+			signUpButton.readOnly = true; 
 		}
 	};
 
 	const handleTermsCheckbox = () => {
-		toggleButtonState();
-		validateFormFields();
+		toggleButtonState(); 
+		validateFormFields(); 
 	};
 
 	const handleTogglePasswordClick = () => {
