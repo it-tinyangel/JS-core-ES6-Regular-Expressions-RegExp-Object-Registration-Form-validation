@@ -12,12 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	const validations = [
 		{
 			input: document.getElementById('firstName'),
-			regex: /^[a-zA-Z]+$/,
+			regex: /^(?!\s+$)[a-zA-Z]+$/,
 			error: document.querySelector('#errorFirstName'),
 		},
 		{
 			input: document.getElementById('lastName'),
-			regex: /^[a-zA-Z]+$/,
+			regex: /^(?!\s+$)[a-zA-Z]+$/,
 			error: document.querySelector('#errorLastName')
 		},
 		{
@@ -34,16 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const validateFieldAndShowError = (input, regex, error) => {
 		const trimmedValue = input.value.trim();
-		const hasNonWhitespaceChars = /\S/.test(input.value); 
+		const hasNonWhitespaceChars = /\S/.test(input.value);
 		const isValid = regex.test(trimmedValue) && hasNonWhitespaceChars;
 
 		input.parentElement.classList.toggle('is-invalid', !isValid);
 		input.parentElement.classList.toggle('is-valid', isValid);
-		input.classList.toggle('has-only-whitespace', !hasNonWhitespaceChars); 
+		input.classList.toggle('has-only-whitespace', !isValid);
 
 		error.innerHTML = isValid ? '' : `<p>Please, provide a valid ${input.name}.</p>`;
 		error.classList.toggle('active', !isValid || !input.checkValidity());
-		
+
 		return isValid;
 	};
 
@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		const isValid = validations.every(validation =>
 			validateFieldAndShowError(validation.input, validation.regex, validation.error)
 		);
-				
 		signUpButton.disabled = !isValid || !terms.checked;
 	};
 
@@ -77,13 +76,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (signUpButton.readOnly) {
 			signUpButton.readOnly = false;
 		} else {
-			signUpButton.readOnly = true; 
+			signUpButton.readOnly = true;
 		}
 	};
 
 	const handleTermsCheckbox = () => {
-		toggleButtonState(); 
-		validateFormFields(); 
+		toggleButtonState();
+		validateFormFields();
 	};
 
 	const handleTogglePasswordClick = () => {
@@ -101,8 +100,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	form.addEventListener('input', validateFormFields);
+
 	terms.addEventListener('change', handleTermsCheckbox);
+
 	signUpButton.addEventListener('click', handleFormSubmit);
+
 	exploreButton.addEventListener('click', handleExploreButtonClick);
 	togglePassword.addEventListener('click', handleTogglePasswordClick);
 
