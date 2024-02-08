@@ -4,18 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	const signUpButton = document.querySelector('#signUpButton');
 	const successModal = document.querySelector('#successModal');
 	const exploreButton = document.querySelector('#exploreButton');
+
 	const togglePassword = document.querySelector('.toggle-password');
 	const togglePasswordIcon = togglePassword.querySelector('i');
 
 	const validations = [
 		{
 			input: document.getElementById('firstName'),
-			regex: /^[a-zA-Z]{1,20}$/,
-			error: document.querySelector('#errorFirstName')
+			regex: /^(?!\s*$)[a-zA-Z]+$/,
+			error: document.querySelector('#errorFirstName'),
 		},
 		{
 			input: document.getElementById('lastName'),
-			regex: /^[a-zA-Z]{1,20}$/,
+			regex: /^(?!\s*$)[a-zA-Z]+$/,
 			error: document.querySelector('#errorLastName')
 		},
 		{
@@ -30,84 +31,82 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	];
 
-	form.addEventListener('input', validateFormInput);
-	terms.addEventListener('change', handleTermsChange);
-	signUpButton.addEventListener('click', handleFormSubmit);
-	exploreButton.addEventListener('click', handleExploreButtonClick);
-	togglePassword.addEventListener('click', handleTogglePasswordClick);
-
-	function validateInput(input, regex, errorElement) {
+	const validateFieldAndShowError = (input, regex, error) => {
 		const trimmedValue = input.value.trim();
-		const isValid = regex.test(trimmedValue) && /\S/.test(trimmedValue); 
+		const isValid = regex.test(trimmedValue);
 
-		if (isValid) {
-			input.parentElement.classList.remove('invalid');
-			input.parentElement.classList.add('valid');
-		} else {
-			input.parentElement.classList.remove('valid');
-			input.parentElement.classList.add('invalid');
-		}
+		input.parentElement.classList.toggle('is-invalid', !isValid);
+		input.parentElement.classList.toggle('is-valid', isValid);
 
-		if (!isValid || !input.checkValidity()) {
-			errorElement.innerHTML = `<p>Please, provide a valid ${input.name}.</p>`;
-			errorElement.classList.add('active');
-		} else {
-			errorElement.innerHTML = '';
-			errorElement.classList.remove('active');
-		}
+		error.innerHTML = isValid ? '' : `<p>Please, provide a valid ${input.name}.</p>`;
+		error.classList.toggle('active', !isValid || !input.checkValidity());
 
 		return isValid;
-	}
+	};
 
-	function validateFormInput() {
+	const validateFormFields = () => {
 		const isValid = validations.every(validation =>
-			validateInput(validation.input, validation.regex, validation.error)
+			validateFieldAndShowError(validation.input, validation.regex, validation.error)
 		);
 		signUpButton.disabled = !isValid || !terms.checked;
-	}
+	};
 
-	function showModal() {
+	const showModal = () => {
 		successModal.classList.add('active');
-	}
+	};
 
-	function hideModal() {
+	const hideModal = () => {
 		successModal.classList.remove('active');
-		form.reset();
-	}
+	};
 
-	function handleFormSubmit(event) {
+	const handleFormSubmit = event => {
 		event.preventDefault();
 		showModal();
-	}
+	};
 
-	function handleExploreButtonClick() {
+	const handleExploreButtonClick = () => {
 		hideModal();
-	}
+		form.reset();
+	};
 
-	function toggleButtonState() {
+	const toggleButtonState = () => {
 		if (signUpButton.readOnly) {
 			signUpButton.readOnly = false;
 		} else {
 			signUpButton.readOnly = true;
 		}
-	}
+	};
 
-	function handleTermsChange() {
+	const handleTermsCheckbox = () => {
 		toggleButtonState();
-		validateFormInput();
-	}
+		validateFormFields();
+	};
 
-	function handleTogglePasswordClick() {
+	const handleTogglePasswordClick = () => {
 		password.getAttribute("type") === 'password' ? showPassword() : hidePassword();
-	}
+	};
 
-	function showPassword() {
+	const showPassword = () => {
 		password.setAttribute('type', 'text');
 		togglePasswordIcon.className = 'fa-solid fa-eye';
-	}
+	};
 
-	function hidePassword() {
+	const hidePassword = () => {
 		password.setAttribute('type', 'password');
 		togglePasswordIcon.className = 'fa-solid fa-eye-slash';
-	}
+	};
+
+	form.addEventListener('input', validateFormFields);
+	terms.addEventListener('change', handleTermsCheckbox);
+	signUpButton.addEventListener('click', handleFormSubmit);
+	exploreButton.addEventListener('click', handleExploreButtonClick);
+	togglePassword.addEventListener('click', handleTogglePasswordClick);
+
+	validations.forEach(validation => {
+		const { input, regex, error } = validation;
+
+		input.addEventListener('input', () => {
+			validateFieldAndShowError(input, regex, error);
+		});
+	});
 });
