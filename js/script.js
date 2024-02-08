@@ -34,8 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const validateFieldAndShowError = (input, regex, error) => {
 		const trimmedValue = input.value.trim();
-		const hasNonWhitespaceChars = /\S/.test(input.value);
-		const isValid = regex.test(trimmedValue) && hasNonWhitespaceChars;
+		const isValid = regex.test(trimmedValue);
+
+		const isNotEmpty = trimmedValue.length > 0 && input.value === '';
+
+		togglePasswordIcon.classList.toggle('visually-hidden', !isNotEmpty);
 
 		input.parentElement.classList.toggle('is-invalid', !isValid);
 		input.parentElement.classList.toggle('is-valid', isValid);
@@ -98,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		password.setAttribute('type', 'password');
 		togglePasswordIcon.className = 'fa-solid fa-eye-slash';
 	};
-
 	form.addEventListener('input', validateFormFields);
 
 	terms.addEventListener('change', handleTermsCheckbox);
