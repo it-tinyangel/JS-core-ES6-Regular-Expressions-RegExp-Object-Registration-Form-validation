@@ -255,6 +255,9 @@ div.input-wrap>input.form-input:valid:focus+span.field-icon::after {
 	cursor: pointer;
 }
 
+div.input-wrap>input.form-input.has-only-whitespace:valid+span.field-icon::after,
+div.input-wrap>input.form-input.has-only-whitespace:user-valid+span.field-icon::after,
+div.input-wrap>input.form-input.has-only-whitespace:valid:focus+span.field-icon::after,
 div.input-wrap>input.form-input:user-invalid+span.field-icon::after,
 div.input-wrap>input.form-input:invalid:focus+span.field-icon::after {
 	width: fit-content;
@@ -385,6 +388,7 @@ button#signUpButton.form-submit:focus {
 }
 
 /* Successful modal */
+div.input-wrap>input.form-input+span.toggle-password>i.visually-hidden,
 .visually-hidden {
 	display: none;
 }
