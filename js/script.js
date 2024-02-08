@@ -12,12 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	const validations = [
 		{
 			input: document.getElementById('firstName'),
-			regex: /^(?!\s+$)[a-zA-Z]+$/,
+			regex: /^[a-zA-Z]+$/,
 			error: document.querySelector('#errorFirstName'),
 		},
 		{
 			input: document.getElementById('lastName'),
-			regex: /^(?!\s+$)[a-zA-Z]+$/,
+			regex: /^[a-zA-Z]+$/,
 			error: document.querySelector('#errorLastName')
 		},
 		{
