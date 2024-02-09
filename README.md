@@ -1,6 +1,6 @@
 ## Module 3. JS Core. Lesson 19. Task
 
-###  ECMAScript 6 (ES6+). Regular Expressions. RegExp Basic
+### RegExp Basic. Regular Expressions (Regex)
 ***
 
 ### Validation of the registration form
@@ -9,7 +9,7 @@ Implementation of verification of the registration form before sending and its i
 
 **Task description:**
 
-- Validation of data entered into text fields using regular expressions(the form passes validation only if there are letters of the Latin alphabet, the presence of spaces without other symbols does not pass validation).
+- Validation of data entered into text fields using regular expressions (the form passes validation only if there are letters of the Latin alphabet, the presence of spaces without other symbols does not pass validation).
 
 - Display real-time error messages during user input.
 
